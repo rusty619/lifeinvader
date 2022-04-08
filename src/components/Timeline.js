@@ -1,33 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import Post from './Post';
 
-const Timeline= () => {
-    const [posts, setPost] = useState([])
+const Timeline = () => {
+  const [posts, setPosts] = useState([])
 
-    useEffect(() => {
-       // console.log("Rendering Timeline...")
-        // IIFE: immediately invoked function expression
-        (async() => {
-            let req = await fetch('https://raw.githubusercontent.com/rmdashrfv/lifeinvader/main/src/data/posts.json')
-            let res = await req.json()
-            setPost(res)
-        })()
-    }, [])
-
-    return(
-        <div>
-            <h2>Timeline</h2>    
-            {
-                posts.map((element) => {
-                    return(
-                        <div>
-                            <p>Post by {element.username}</p>
-                            <p>{element.content}</p>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
+  useEffect(() => {
+    // IIFE: immediately invoked function expression
+    (async () => {
+      let req = await fetch('https://raw.githubusercontent.com/rmdashrfv/lifeinvader/main/src/data/posts.json')
+      let res = await req.json()
+      setPosts(res)
+    })()
+  }, [])
+  
+  return (
+    <div>
+      <h2>Timeline</h2>
+      {
+        posts.map((post) => {
+          return(
+            <Post post={post} />
+          )
+        })
+      }
+    </div>
+  )
 }
 
 export default Timeline;
